@@ -1,16 +1,15 @@
 import React from 'react'
 import NavigationBar from '../components/Navbar'
 import { Button } from 'react-bootstrap'
-import '../css/Home.css'
 
 function Home() {
     return (
         <div>
             <NavigationBar />
-            <div className='homeBody p-5'>
-                <h2 className='title fs-1'>Journey</h2>
+            <div className='p-5' style={{backgroundColor:'#EDEDED'}}>
+                <h2 className='Montserrat fs-1 fw-bold'>Journey</h2>
 
-                <div className='searchbar input-group px-5 py-3'>
+                <div className='OpenSans input-group px-5 py-3'>
                     <input 
                         type="text" 
                         class="form-control" 
@@ -20,8 +19,9 @@ function Home() {
                     />
                     <Button className='px-4 input-group-text' variant="primary fw-bold" id="searchbar">Search</Button>  
                 </div>
-                                
-                <p>Cards</p>
+
+                <p>Card WIP</p>
+
             </div>
         </div>
     )

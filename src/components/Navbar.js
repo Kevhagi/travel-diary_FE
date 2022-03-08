@@ -39,7 +39,7 @@ const goHome = () => {
                                             <div>
                                             <img src={Profile} width="30" height="30" alt="profile" />
                                             </div>
-                                            <div className='ms-2 dropdownLabel'>
+                                            <div className='ms-2 OpenSans fw-bold'>
                                             Profile
                                             </div>
                                         </button>
@@ -49,7 +49,7 @@ const goHome = () => {
                                             <div>
                                             <img src={NewJourney} width="30" height="30" alt="profile" />
                                             </div>
-                                            <div className='ms-2 dropdownLabel'>
+                                            <div className='ms-2 OpenSans fw-bold'>
                                            New Journey
                                             </div>
                                         </button>
@@ -59,7 +59,7 @@ const goHome = () => {
                                             <div>
                                             <img src={Bookmark} width="30" height="30" alt="profile" />
                                             </div>
-                                            <div className='ms-2 dropdownLabel'>
+                                            <div className='ms-2 OpenSans fw-bold'>
                                             Bookmark
                                             </div>
                                         </button>
@@ -69,7 +69,7 @@ const goHome = () => {
                                             <div>
                                             <img src={Logout} width="30" height="30" alt="logout" />
                                             </div>
-                                            <div className='ms-2 dropdownLabel'>
+                                            <div className='ms-2 OpenSans fw-bold'>
                                             Logout
                                             </div>
                                         </button>
@@ -91,9 +91,9 @@ const goHome = () => {
                             <Button className='px-4' variant="primary fw-bold">Register</Button>
                         </Stack>
                     </div>
-                    <div className='d-flex flex-column content text-white'>
-                        <p className='title fs-1 mb-0'>The Journey <br /> you ever dreamed of.</p>
-                        <p className='subtitle fs-4 mb-0'>We made a tool so you can easily keep & share your travel memories. <br />But there is a lot more</p>
+                    <div className='d-flex flex-column content text-white Montserrat'>
+                        <p className='fs-1 fw-bold mb-0'>The Journey <br /> you ever dreamed of.</p>
+                        <p className='fs-4 fw-lighter mb-0'>We made a tool so you can easily keep & share your travel memories. <br />But there is a lot more</p>
                     </div>
                 </div>  
                 ) 
