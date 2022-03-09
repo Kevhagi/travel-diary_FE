@@ -13,13 +13,25 @@ import '../css/Navbar.css'
 import 'bootstrap/js/dist/dropdown'
 
 function NavigationBar() {
-const isLogin = false
+    const isLogin = false
 
-let navigate = useNavigate()
+    let navigate = useNavigate()
 
-const goHome = () => {
-    navigate("/")
-}
+    const goHome = () => {
+        navigate("/")
+    }
+
+    const goProfile = () => {
+        navigate("/profile")
+    }
+
+    const goBookmark = () => {
+        navigate("/bookmark")
+    }
+
+    const goAddJourney = () => {
+        navigate("/add-journey")
+    }
     return(
         <div className='Navbar'>
             {isLogin ? 
@@ -34,7 +46,7 @@ const goHome = () => {
                                     <img src={adminPic} width="50" height="50" className='rounded-circle border border-1 border-primary' alt="profilepic" />
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
-                                    <li className='d-flex align-items-center'>
+                                    <li className='d-flex align-items-center' onClick={goProfile}>
                                         <button class="btn shadow-none px-3 pe-2 py-4 d-flex align-items-center">
                                             <div>
                                             <img src={Profile} width="30" height="30" alt="profile" />
@@ -44,7 +56,7 @@ const goHome = () => {
                                             </div>
                                         </button>
                                     </li>
-                                    <li className='d-flex align-items-center'>
+                                    <li className='d-flex align-items-center' onClick={goAddJourney}>
                                         <button class="btn shadow-none px-3 pe-2 py-4 d-flex align-items-center">
                                             <div>
                                             <img src={NewJourney} width="30" height="30" alt="profile" />
@@ -54,7 +66,7 @@ const goHome = () => {
                                             </div>
                                         </button>
                                     </li>
-                                    <li className='d-flex align-items-center'>
+                                    <li className='d-flex align-items-center' onClick={goBookmark}>
                                         <button class="btn shadow-none px-3 pe-2 py-4 d-flex align-items-center">
                                             <div>
                                             <img src={Bookmark} width="30" height="30" alt="profile" />

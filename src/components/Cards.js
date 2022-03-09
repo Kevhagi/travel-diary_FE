@@ -8,8 +8,8 @@ import '../css/Cards.css'
 function Cards( {item} ) {
     return (
         <div>
-            <CardGroup className='mb-5'>
-
+            <Link to={`/journey/` + item.id} style={{textDecoration : "none"}}>
+            <CardGroup className='mb-5 mx-3'>
                     <Card className='shadow'>
                         <Card.Img 
                             variant="top" 
@@ -22,7 +22,7 @@ function Cards( {item} ) {
                                 height:150,
                                 maxHeight:150,
                             }}
-                            className='OpenSans'
+                            className='OpenSans text-black'
                         >
                             <Card.Title className='fw-bold text-truncate'>{item.title}</Card.Title>
                             <Card.Subtitle className='text-muted mb-2'>Dummy subtitle</Card.Subtitle>
@@ -35,8 +35,8 @@ function Cards( {item} ) {
                             >{item.text}</Card.Text>
                         </Card.Body>
                     </Card>
-
             </CardGroup>
+            </Link>
         </div>
     )
 }
