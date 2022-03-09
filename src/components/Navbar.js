@@ -1,7 +1,7 @@
-import React from 'react'
-import { Navbar, Container, Button, Stack } from 'react-bootstrap'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+//Images
 import Icon from '../images/Navbar/Icon.svg'
 import Icon2 from '../images/Navbar/Icon(2).svg'
 import Profile from '../images/Navbar/Profile.svg'
@@ -9,12 +9,19 @@ import NewJourney from '../images/Navbar/NewJourney.svg'
 import Bookmark from '../images/Navbar/Bookmark.svg'
 import Logout from '../images/Navbar/Logout.svg'
 import adminPic from '../images/Navbar/adminPic.jpg'
+
+//Bootstrap
+import { Navbar, Container, Button, Stack } from 'react-bootstrap'
 import '../css/Navbar.css'
 import 'bootstrap/js/dist/dropdown'
+
+//Modals
+import { LoginModal, RegisterModal } from '../components/Modals'
 
 function NavigationBar() {
     const isLogin = false
 
+    //Navigations
     let navigate = useNavigate()
 
     const goHome = () => {
@@ -32,6 +39,15 @@ function NavigationBar() {
     const goAddJourney = () => {
         navigate("/add-journey")
     }
+
+    //Modal Login
+    const [showLogin, setShowLogin] = useState(false);
+    const handleLogin = () => setShowLogin(true)
+
+    //Modal Register
+    const [showRegister, setShowRegister] = useState(false);
+    const handleRegister = () => setShowRegister(true)
+
     return(
         <div className='Navbar'>
             {isLogin ? 
@@ -99,8 +115,16 @@ function NavigationBar() {
                             <img src={Icon} alt="" />    
                         </div>
                         <Stack direction="horizontal" gap={3}>
-                            <Button className='px-4' variant="outline-light fw-bold">Login</Button>
-                            <Button className='px-4' variant="primary fw-bold">Register</Button>
+                            <Button 
+                                className='px-4' 
+                                variant="outline-light fw-bold"
+                                onClick={() => {handleLogin()}}
+                            >Login</Button>
+                            <Button 
+                                className='px-4' 
+                                variant="primary fw-bold"
+                                onClick={() => {handleRegister()}}
+                            >Register</Button>
                         </Stack>
                     </div>
                     <div className='d-flex flex-column content text-white Montserrat'>
@@ -109,7 +133,15 @@ function NavigationBar() {
                     </div>
                 </div>  
                 ) 
-            } 
+            }
+            <LoginModal 
+                show={showLogin}
+                onHide={() => setShowLogin(false)}
+            />
+            <RegisterModal 
+                show={showRegister}
+                onHide={() => setShowRegister(false)}
+            />
         </div>
     )
 }
