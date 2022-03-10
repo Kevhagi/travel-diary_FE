@@ -48,6 +48,16 @@ function NavigationBar() {
     const [showRegister, setShowRegister] = useState(false);
     const handleRegister = () => setShowRegister(true)
 
+    //Handle switch modal
+    function handleSwitchLogin(){
+        setShowLogin(false)
+        setShowRegister(true)
+    }
+    function handleSwitchRegister(){
+        setShowLogin(true)
+        setShowRegister(false)
+    }
+    
     return(
         <div className='Navbar'>
             {isLogin ? 
@@ -137,10 +147,12 @@ function NavigationBar() {
             <LoginModal 
                 show={showLogin}
                 onHide={() => setShowLogin(false)}
+                switchToRegister={handleSwitchLogin}
             />
             <RegisterModal 
                 show={showRegister}
                 onHide={() => setShowRegister(false)}
+                switchToLogin={handleSwitchRegister}
             />
         </div>
     )

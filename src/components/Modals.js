@@ -42,7 +42,12 @@ export function LoginModal(props) {
                                 <Button className='fs-5' variant="primary fw-bold" type="submit" style={{width:"100%"}}>Login</Button>    
                             </div>
 
-                            <center>Don't have an account? Click <span className='fw-bold' style={{cursor:"pointer"}}>Here</span></center>
+                            <center>Don't have an account? Click <span 
+                                className='fw-bold' 
+                                style={{cursor:"pointer"}}
+                                onClick={props.switchToRegister}
+                                >Here</span>
+                            </center>
                         </form>
                     </div>
                 </div>
@@ -109,7 +114,12 @@ export function RegisterModal(props) {
                                 <Button className='fs-5' variant="primary fw-bold" type="submit" style={{width:"100%"}}>Register</Button>
                             </div>
 
-                            <center>Already have an account? Click <span className='fw-bold' style={{cursor:"pointer"}}>Here</span></center>
+                            <center>Already have an account? Click <span 
+                                className='fw-bold' 
+                                style={{cursor:"pointer"}}
+                                onClick={props.switchToLogin}
+                                >Here</span>
+                            </center>
                         </form>
                     </div>
                 </div>
