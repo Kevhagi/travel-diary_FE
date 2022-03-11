@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 //components
 import NavigationBar from '../components/Navbar'
@@ -10,6 +10,12 @@ import Bookmark from '../images/Cards/Bookmark(2).svg'
 
 //styles
 import { Row, Col } from 'react-bootstrap'
+
+//API
+import { API } from '../config/api'
+
+//UseContext
+import { UserContext } from '../context/userContext'
 
 function Profile() {
     const dataDummy = [
@@ -34,6 +40,29 @@ function Profile() {
             text : "Text 4"
         }
     ]
+
+    const [state, dispatch] = useContext(UserContext);
+
+    const [user, setUser] = useState({
+        fullName : '',
+        email : '',
+        id : ''
+    })
+
+    const getProfile = async() => {
+        try {
+            const response = await API.get(`/profile/${state.user.id}`)
+            setUser(response.data)
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getProfile()
+    }, [state])
+
     return (
         <div>
             <NavigationBar />
@@ -52,8 +81,8 @@ function Profile() {
                     </div>
 
                     <div className='pt-4'>
-                        <center className='fs-3'>Name</center>
-                        <center className='text-muted'>Email</center>    
+                        <center className='fs-3'>{user.fullName}</center>
+                        <center className='text-muted'>{user.email}</center>    
                     </div>
                 </div>
 

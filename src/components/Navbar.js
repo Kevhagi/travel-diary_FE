@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 //Images
@@ -18,8 +18,11 @@ import 'bootstrap/js/dist/dropdown'
 //Modals
 import { LoginModal, RegisterModal } from '../components/Modals'
 
+//UseContext
+import { UserContext } from '../context/userContext'
+
 function NavigationBar() {
-    const isLogin = false
+    const [state, dispatch] = useContext(UserContext);
 
     //Navigations
     let navigate = useNavigate()
@@ -38,6 +41,13 @@ function NavigationBar() {
 
     const goAddJourney = () => {
         navigate("/add-journey")
+    }
+
+    const logout = () => {
+        dispatch({
+          type: "LOGOUT"
+        });
+        navigate("/")
     }
 
     //Modal Login
@@ -60,7 +70,7 @@ function NavigationBar() {
     
     return(
         <div className='Navbar'>
-            {isLogin ? 
+            {state.isLogin ? 
                 (
                     <Navbar className='navbarLogin'>
                         <Container className='d-flex justify-content-between'>
@@ -102,7 +112,7 @@ function NavigationBar() {
                                             </div>
                                         </button>
                                     </li>
-                                    <li className='d-flex border-2 border-secondary border-top'>
+                                    <li className='d-flex border-2 border-secondary border-top' onClick={logout}>
                                         <button class="btn shadow-none px-3 pe-2 py-4 d-flex align-items-center">
                                             <div>
                                             <img src={Logout} width="30" height="30" alt="logout" />

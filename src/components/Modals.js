@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 //styles
 import { Modal, InputGroup, FormControl, Button, Alert } from 'react-bootstrap'
@@ -13,6 +14,8 @@ import { UserContext } from '../context/userContext'
 export function LoginModal(props) {
     const [state, dispatch] = useContext(UserContext);
     const [message, setMessage] = useState(null)
+
+    let navigate = useNavigate()
 
     const [form, setForm] = useState({
         email : '',
@@ -32,7 +35,6 @@ export function LoginModal(props) {
 
             const config = {
                 headers : {
-                    'Access-Control-Allow-Origin': '*',
                     "Content-type" : "application/json"
                 }
             }
@@ -43,7 +45,7 @@ export function LoginModal(props) {
             //Use API
             const response = await API.post("/login", body, config)
 
-            if (response.status == 200) {
+            if (response.status === 200) {
                 dispatch({
                     type: "LOGIN_SUCCESS",
                     payload : response.data.data
@@ -54,7 +56,7 @@ export function LoginModal(props) {
                     </Alert>
                 )
                 setMessage(alert)
-                document.location.reload(true)
+                navigate('/profile')
             }
 
         } catch (error) {
@@ -133,6 +135,66 @@ export function LoginModal(props) {
 }
 
 export function RegisterModal(props) {
+    const [message, setMessage] = useState(null)
+
+    const [form, setForm] = useState({
+        fullName : '',
+        email : '',
+        password : '',
+        phone : ''
+    })
+
+    const handleChange = (e) => {
+        setForm({
+            ...form,
+            [e.target.name] : e.target.value
+        })
+    }
+
+    const handleSubmit = async (e) => {
+        try {
+            e.preventDefault()
+
+            const config = {
+                headers : {
+                    "Content-type" : "application/json"
+                }
+            }
+
+            //XML to String
+            const body = JSON.stringify(form)
+
+            //Use API
+            const response = await API.post("/register", body, config)
+
+            if (response.status === 200) {
+                const alert = (
+                    <Alert variant='success' className='py-1 px-1'>
+                        Registration success!
+                    </Alert>
+                )
+                setMessage(alert)
+                document.getElementById("switch").click()
+            }
+
+        } catch (error) {
+            console.log(error);
+
+            let errorMessage = error.response.data.error.message
+            errorMessage = errorMessage.replace('"email"', 'Email')
+            errorMessage = errorMessage.replace('"password"', 'Password')
+            errorMessage = errorMessage.replace('"fullName"', 'Fullname')
+            errorMessage = errorMessage.replace('"phone"', 'Phone number')
+
+            const alert = (
+                <Alert variant='danger' className='py-1 px-1'>
+                    {errorMessage}
+                </Alert>
+            )
+            setMessage(alert)
+        }
+    }
+
     return(
         <Modal
             {...props}
@@ -143,14 +205,18 @@ export function RegisterModal(props) {
             <Modal.Body className='px-0 OpenSans'>
                 <div className='px-5'>
                     <center className='py-4 fs-2 fw-bold'>Register</center>
-
                     <div className='d-flex flex-column'>
-                        <form className='px-4'>
+                         <div className='px-4'>
+                            {message && message}    
+                        </div>
+                        <form className='px-4' onSubmit={handleSubmit}>
                             <div className='mb-4'>
-                                <label htmlFor="FullName" className='ps-2 fs-4 fw-bold'>Full Name</label>
+                                <label htmlFor="fullName" className='ps-2 fs-4 fw-bold'>Full Name</label>
                                 <InputGroup>
                                     <FormControl 
-                                        id='FullName'
+                                        id='fullName'
+                                        name="fullName"
+                                        onChange={handleChange}
                                         style={{backgroundColor:"rgba(210, 210, 210, 0.25)"}}
                                     />
                                 </InputGroup>    
@@ -161,6 +227,9 @@ export function RegisterModal(props) {
                                 <InputGroup>
                                     <FormControl 
                                         id="Email"
+                                        name="email"
+                                        type="email"
+                                        onChange={handleChange}
                                         style={{backgroundColor:"rgba(210, 210, 210, 0.25)"}}
                                     />
                                 </InputGroup>    
@@ -171,6 +240,9 @@ export function RegisterModal(props) {
                                 <InputGroup>
                                     <FormControl 
                                         id="Password"
+                                        name="password"
+                                        type="password"
+                                        onChange={handleChange}
                                         style={{backgroundColor:"rgba(210, 210, 210, 0.25)"}}
                                     />
                                 </InputGroup>    
@@ -181,6 +253,9 @@ export function RegisterModal(props) {
                                 <InputGroup>
                                     <FormControl 
                                         id="Phone"
+                                        name="phone"
+                                        type="number"
+                                        onChange={handleChange}
                                         style={{backgroundColor:"rgba(210, 210, 210, 0.25)"}}
                                     />
                                 </InputGroup>    
@@ -191,6 +266,7 @@ export function RegisterModal(props) {
                             </div>
 
                             <center>Already have an account? Click <span 
+                                id="switch"
                                 className='fw-bold' 
                                 style={{cursor:"pointer"}}
                                 onClick={props.switchToLogin}
