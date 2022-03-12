@@ -2,8 +2,6 @@ import React from 'react'
 import { Link } from "react-router-dom"
 import { Card, CardGroup } from 'react-bootstrap'
 
-import sampleImg from '../images/Navbar/adminPic.jpg'
-import Bookmark from '../images/Cards/Bookmark(2).svg'
 import '../css/Cards.css'
 
 import dateFormat, { masks } from "dateformat";
@@ -17,7 +15,7 @@ function Cards( {item} ) {
                     <Card className='shadow'>
                         <Card.Img 
                             variant="top" 
-                            src={sampleImg} 
+                            src={item.image} 
                             width={300}
                             height={180}
                         />
