@@ -18,30 +18,8 @@ import { API } from '../config/api'
 import { UserContext } from '../context/userContext'
 
 function Profile() {
-    const dataDummy = [
-        {
-            id : 1,
-            title : "Title 1",
-            text : "Text 1"
-        },
-        {
-            id : 2,
-            title : "Title 2",
-            text : "Text 2"
-        },
-        {
-            id : 3,
-            title : "Title 3 aaaaaaaaaaaaaaaaaaaa",
-            text : "Text 3 lorem ipsum dolor sit amet ameji yahagi scarlet daiwa teio aiyaya changechang mao zedong ching cheng hanji paul in th e dungeon nigger"
-        },
-        {
-            id : 4,
-            title : "Title 4",
-            text : "Text 4"
-        }
-    ]
-
     const [state, dispatch] = useContext(UserContext);
+    const [post, setPost] = useState([])
 
     const [user, setUser] = useState({
         fullName : '',
@@ -56,11 +34,25 @@ function Profile() {
             
         } catch (error) {
             console.log(error);
+            console.log(error.response);
         }
     }
 
+    const getPosts = async () => {
+        try {
+            const response = await API.get(`/profile/${state.user.id}/journey`)
+            setPost(response.data.data)
+        } catch (error) {
+            console.log(error);
+            console.log(error.response);
+        }
+    }
+
+    console.log(post);
+
     useEffect(() => {
         getProfile()
+        getPosts()
     }, [state])
 
     return (
@@ -87,9 +79,9 @@ function Profile() {
                 </div>
 
                 <Row className="row row-cols-4 mt-4">
-                    {dataDummy.length !== 0 ? (
+                    {post.length !== 0 ? (
                     <>
-                        {dataDummy.map((item, index) => (
+                        {post.map((item, index) => (
                             <div key={index} style={{position:"relative"}}>
                                 <Cards item={item} />
                                 <img 
@@ -99,8 +91,7 @@ function Profile() {
                                     style={{
                                         position:"absolute", 
                                         top:10, 
-                                        right:40,
-                                        cursor:"pointer"
+                                        right:35
                                     }}
                                 />
                             </div>

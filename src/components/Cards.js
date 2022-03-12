@@ -3,9 +3,13 @@ import { Link } from "react-router-dom"
 import { Card, CardGroup } from 'react-bootstrap'
 
 import sampleImg from '../images/Navbar/adminPic.jpg'
+import Bookmark from '../images/Cards/Bookmark(2).svg'
 import '../css/Cards.css'
 
+import dateFormat, { masks } from "dateformat";
+
 function Cards( {item} ) {
+    var date = dateFormat(item.updatedAt, "dd mmmm yyyy")
     return (
         <div>
             <Link to={`/journey/` + item.id} style={{textDecoration : "none"}}>
@@ -25,14 +29,16 @@ function Cards( {item} ) {
                             className='OpenSans text-black'
                         >
                             <Card.Title className='fw-bold text-truncate'>{item.title}</Card.Title>
-                            <Card.Subtitle className='text-muted mb-2'>Dummy subtitle</Card.Subtitle>
+                            <Card.Subtitle className='text-muted mb-2'>
+                                {date}, {item.author.fullName}
+                            </Card.Subtitle>
                             <Card.Text
                                 style={{
                                     color: "#6C6C6C",
                                     fontSize: 14
                                 }}
                                 className='textTruncate'
-                            >{item.text}</Card.Text>
+                            >{item.desc}</Card.Text>
                         </Card.Body>
                     </Card>
             </CardGroup>
