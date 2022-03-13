@@ -1,19 +1,17 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import NavigationBar from '../components/Navbar'
 
 //API
 import { API } from '../config/api'
 
-//UseContext
-import { UserContext } from '../context/userContext'
-
 import dateFormat, { masks } from "dateformat";
+
+import DOMPurify from 'dompurify';
 
 function Journey() {
     let { id } = useParams()
     const [journey, setJourney] = useState('')
-    const [state, dispatch] = useContext(UserContext);
 
     const getJourney = async() => {
         try {
@@ -26,9 +24,11 @@ function Journey() {
 
     console.log(journey);
 
+    let sanitized = DOMPurify.sanitize(journey.desc)
+
     useEffect(() => {
         getJourney()
-    }, [state])
+    }, [])
 
     return (
         <div>
@@ -36,9 +36,13 @@ function Journey() {
             <div className='p-5'>
                 {journey !== '' ?
                 <div className="px-5">
-                    <div className="section1 d-flex justify-content-between">
-                        <p className="fw-bold" style={{fontSize:48}}>{journey.title}</p>
-                        <p className="fw-normal fs-1">{journey.author.fullName}</p>
+                    <div className="section1">
+                        <div>
+                            <p className="fw-bold" style={{fontSize:48}}>{journey.title}</p>    
+                        </div>
+                        <div>
+                            <p className="fw-normal fs-2 my-3">{journey.author.fullName}</p>    
+                        </div>
                     </div>
                     <p className="fs-4 text-primary">{dateFormat(journey.updatedAt, "dd mmmm yyyy")}</p>
                     <div className="my-5 d-flex justify-content-center">
@@ -49,10 +53,11 @@ function Journey() {
                         />    
                     </div>
                     
-                    <p>{journey.desc}</p>
+                    <div dangerouslySetInnerHTML={{__html: sanitized}}>
+                    </div>
                 </div>
                 :
-                    <div>kosong</div>
+                    <></>
                 }
             </div>
         </div>

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import Avatar from 'react-avatar';
 
 //components
 import NavigationBar from '../components/Navbar'
@@ -6,7 +7,7 @@ import Cards from '../components/Cards'
 
 //images
 import adminPic from '../images/Navbar/adminPic.jpg'
-import Bookmark from '../images/Cards/Bookmark(2).svg'
+import Trash from '../images/Profile/trash.svg'
 
 //styles
 import { Row, Col } from 'react-bootstrap'
@@ -24,7 +25,8 @@ function Profile() {
     const [user, setUser] = useState({
         fullName : '',
         email : '',
-        id : ''
+        id : '',
+        image : ''
     })
 
     const getProfile = async() => {
@@ -63,13 +65,17 @@ function Profile() {
 
                 <div className='Montserrat py-3'>
                     <div className='d-flex justify-content-center'>
-                        <img 
-                            src={adminPic} 
-                            width="200" 
-                            height="200" 
-                            className='rounded-circle border border-1 border-primary' 
-                            alt="profilepic" 
-                        />
+                        {user.image === null ?
+                            <Avatar name={user.fullName} className="rounded-circle border border-1 border-primary" size="200"/>
+                        :
+                            <img 
+                                src={user.image} 
+                                width="200" 
+                                height="200" 
+                                className='rounded-circle border border-1 border-primary' 
+                                alt="profilepic" 
+                            />
+                        }
                     </div>
 
                     <div className='pt-4'>
@@ -85,7 +91,7 @@ function Profile() {
                             <div key={index} style={{position:"relative"}}>
                                 <Cards item={item} />
                                 <img 
-                                    src={Bookmark}
+                                    src={Trash}
                                     alt="BookmarkIcon"
                                     width={30} 
                                     style={{

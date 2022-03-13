@@ -20,8 +20,6 @@ function Bookmark() {
     const [state, dispatch] = useContext(UserContext);
     const [bookmark, setBookmark] = useState([])
 
-    console.log(bookmark);
-
     const getBookmarks = async() => {
         try {
             const response = await API.get(`/bookmarks/${state.user.id}`)
@@ -49,7 +47,6 @@ function Bookmark() {
 
             if (response?.status === 200) {
                 alert(response.data.message)
-                document.location.reload(true)
             }
 
         } catch (error) {
@@ -63,7 +60,7 @@ function Bookmark() {
 
     useEffect(() => {
         getBookmarks()
-    }, [])
+    }, [state])
     return (
         <div>
             <NavigationBar />

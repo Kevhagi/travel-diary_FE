@@ -1,21 +1,37 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 
 //components
 import NavigationBar from '../components/Navbar'
 import Cards from '../components/Cards'
+import { LoginModal } from '../components/Modals'
 
 //images
 import Bookmark from '../images/Cards/Bookmark(2).svg'
 import Bookmarked from '../images/Cards/Bookmarked.svg'
 
 //styles
-import { Button, Row, Col } from 'react-bootstrap'
+import { Row } from 'react-bootstrap'
 
 //API
 import { API } from '../config/api'
 
+//UseContext
+import { UserContext } from '../context/userContext'
+
 function Home() {
     const [post, setPost] = useState([])
+    const [bookmark, setBookmark] = useState([])
+    const [search, setSearch] = useState('')
+    const [state, dispatch] = useContext(UserContext);
+
+    //Modal Login
+    const [showLogin, setShowLogin] = useState(false);
+    const [showRegister, setShowRegister] = useState(false);
+    const handleLogin = () => setShowLogin(true)
+    function handleSwitchLogin(){
+        setShowLogin(false)
+        setShowRegister(true)
+    }
 
     const allPost = async () => {
         try {
@@ -28,24 +44,27 @@ function Home() {
 
     const handleBookmark = async (journeyID) => {
         try {
-            const config = {
-                headers : {
-                  "Content-type" : "application/json"
+            if (state.isLogin) {
+                const config = {
+                    headers : {
+                    "Content-type" : "application/json"
+                    }
                 }
+
+                var id = {
+                    idJourney : journeyID
+                }
+
+                const body = JSON.stringify(id)
+
+                const response = await API.post("/bookmark", body, config)
+
+                if (response?.status === 200) {
+                    alert(response.data.message)
+                }    
+            } else if (!state.isLogin) {
+                handleLogin()
             }
-
-            var id = {
-                idJourney : journeyID
-            }
-
-            const body = JSON.stringify(id)
-
-            const response = await API.post("/bookmark", body, config)
-
-            if (response?.status === 200) {
-                alert(response.data.message)
-            }
-
         } catch (error) {
             console.log(error);
             console.log(error.response);
@@ -55,17 +74,17 @@ function Home() {
 
     const checkBookmark = async () => {
         try {
-            
+            const response = await API.get(`/bookmarks/${state.user.id}`)
+            setBookmark(response.data.data)
         } catch (error) {
             console.log(error);
         }
     }
 
-    console.log(post);
-
     useEffect(() => {
         allPost()
-    }, [])
+        checkBookmark()
+    }, [state])
 
     return (
         <div>
@@ -79,40 +98,52 @@ function Home() {
                         class="form-control" 
                         placeholder="Find Journey" 
                         aria-label="Recipient's username" 
-                        aria-describedby="searchbar" 
+                        aria-describedby="searchbar"
+                        onChange={(e) => {setSearch(e.target.value)}}
                     />
-                    <Button className='px-4 input-group-text' variant="primary fw-bold" id="searchbar">Search</Button>  
                 </div>
 
                 <Row className="row row-cols-4 mt-4">
                     {post.length !== 0 ? (
                     <>
-                        {post.map((item, index) => (
+                        {post.filter((item, index) => {
+                            if (search === '') {
+                                return item
+                            } else if (
+                                item.title.toLowerCase().includes(search.toLowerCase()) || 
+                                item.desc.toLowerCase().includes(search.toLowerCase()) ||
+                                item.author.fullName.toLowerCase().includes(search.toLowerCase())
+                            ) {
+                                return item
+                            }
+                        }).map((item, index) => (
                             <div key={index} style={{position:"relative"}}>
                                 <Cards item={item} />
-                                <img 
-                                    onClick={() => handleBookmark(item.id)}
-                                    src={Bookmark}
-                                    alt="BookmarkIcon"
-                                    width={30} 
-                                    style={{
-                                        position:"absolute", 
-                                        top:10, 
-                                        right:35,
-                                        cursor:"pointer"
-                                    }}
-                                />
+                                    <img 
+                                        onClick={() => handleBookmark(item.id)}
+                                        src={Bookmark}
+                                        alt="BookmarkIcon"
+                                        width={30} 
+                                        style={{
+                                            position:"absolute", 
+                                            top:10, 
+                                            right:35,
+                                            cursor:"pointer"
+                                        }}
+                                    />
                             </div>
                         ))}
                     </>
                     ) : (
-                        <div className="text-center">
-                            <p className="mt-3">No journey data</p>
-                        </div>
+                        <></>
                     )}
                 </Row>
-
             </div>
+            <LoginModal 
+                show={showLogin}
+                onHide={() => setShowLogin(false)}
+                switchToRegister={handleSwitchLogin}
+            />
         </div>
     )
 }

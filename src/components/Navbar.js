@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import Avatar from 'react-avatar';
 
 //Images
 import Icon from '../images/Navbar/Icon.svg'
@@ -8,7 +9,6 @@ import Profile from '../images/Navbar/Profile.svg'
 import NewJourney from '../images/Navbar/NewJourney.svg'
 import Bookmark from '../images/Navbar/Bookmark.svg'
 import Logout from '../images/Navbar/Logout.svg'
-import adminPic from '../images/Navbar/adminPic.jpg'
 
 //Bootstrap
 import { Navbar, Container, Button, Stack } from 'react-bootstrap'
@@ -21,8 +21,31 @@ import { LoginModal, RegisterModal } from '../components/Modals'
 //UseContext
 import { UserContext } from '../context/userContext'
 
+//API
+import { API } from '../config/api'
+
 function NavigationBar() {
     const [state, dispatch] = useContext(UserContext);
+
+    const [user, setUser] = useState({
+        fullName : '',
+        email : '',
+        id : '',
+        image : ''
+    })
+
+    console.log(user);
+
+    const getProfile = async() => {
+        try {
+            const response = await API.get(`/profile/${state.user.id}`)
+            setUser(response.data)
+            
+        } catch (error) {
+            console.log(error);
+            console.log(error.response);
+        }
+    }
 
     //Navigations
     let navigate = useNavigate()
@@ -68,6 +91,10 @@ function NavigationBar() {
         setShowLogin(true)
         setShowRegister(false)
     }
+
+    useEffect(() => {
+        getProfile()
+    }, [state])
     
     return(
         <div className='Navbar'>
@@ -80,7 +107,11 @@ function NavigationBar() {
                             </Navbar.Brand>
                             <Stack direction='horizontal' className='dropdown'>
                                 <button class="btn shadow-none pe-0" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src={adminPic} width="50" height="50" className='rounded-circle border border-1 border-primary' alt="profilepic" />
+                                    {user.image === null ?
+                                        <Avatar name={user.fullName} className="rounded-circle border border-1 border-primary" size="50"/>
+                                    :
+                                        <img src={user.image} width="50" height="50" className='rounded-circle border border-1 border-primary' alt="profilepic" />
+                                    }
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li className='d-flex align-items-center' onClick={goProfile}>
