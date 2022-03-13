@@ -120,13 +120,14 @@ function AddJourney() {
         
             const response = await API.post('/journey', formData, config)
 
-            if(response?.status == 200){
+            if(response?.status === 200){
                 //Bisa ditambahin modal, add more journey/go profile
                 navigate('/profile')
             }
 
         } catch (error) {
             console.log(error)
+            console.log(error.response);
             const alert = (
                 <Alert variant='danger' className='py-1 px-1'>
                     <center>{error.response.data.message}</center>

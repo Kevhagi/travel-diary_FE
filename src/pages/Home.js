@@ -10,7 +10,7 @@ import Bookmark from '../images/Cards/Bookmark(2).svg'
 import Bookmarked from '../images/Cards/Bookmarked.svg'
 
 //styles
-import { Row } from 'react-bootstrap'
+import { Row, Alert } from 'react-bootstrap'
 
 //API
 import { API } from '../config/api'
@@ -20,8 +20,8 @@ import { UserContext } from '../context/userContext'
 
 function Home() {
     const [post, setPost] = useState([])
-    const [bookmark, setBookmark] = useState([])
     const [search, setSearch] = useState('')
+    const [message, setMessage] = useState(null)
     const [state, dispatch] = useContext(UserContext);
 
     //Modal Login
@@ -60,31 +60,30 @@ function Home() {
                 const response = await API.post("/bookmark", body, config)
 
                 if (response?.status === 200) {
-                    alert(response.data.message)
+                    const messageAlert = (
+                        <Alert variant='success' className='py-1 px-1'>
+                            {response.data.message}
+                        </Alert>
+                    )
+                    setMessage(messageAlert)
                 }    
             } else if (!state.isLogin) {
                 handleLogin()
             }
         } catch (error) {
             console.log(error);
-            console.log(error.response);
-            alert(error.response.data.message)
-        }
-    }
-
-    const checkBookmark = async () => {
-        try {
-            const response = await API.get(`/bookmarks/${state.user.id}`)
-            setBookmark(response.data.data)
-        } catch (error) {
-            console.log(error);
+            const messageAlert = (
+                <Alert variant='danger' className='py-1 px-1'>
+                    {error.response.data.message}
+                </Alert>
+            )
+            setMessage(messageAlert)
         }
     }
 
     useEffect(() => {
         allPost()
-        checkBookmark()
-    }, [state])
+    }, [])
 
     return (
         <div>
@@ -102,6 +101,8 @@ function Home() {
                         onChange={(e) => {setSearch(e.target.value)}}
                     />
                 </div>
+
+                {message && message}
 
                 <Row className="row row-cols-4 mt-4">
                     {post.length !== 0 ? (
@@ -123,13 +124,15 @@ function Home() {
                                         onClick={() => handleBookmark(item.id)}
                                         src={Bookmark}
                                         alt="BookmarkIcon"
-                                        width={30} 
+                                        width={60} 
                                         style={{
                                             position:"absolute", 
                                             top:10, 
                                             right:35,
+                                            padding:10,
                                             cursor:"pointer"
                                         }}
+                                        className="rounded-circle bg-light"
                                     />
                             </div>
                         ))}

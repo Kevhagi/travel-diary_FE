@@ -8,7 +8,7 @@ import Cards from '../components/Cards'
 import BookmarkImg from '../images/Cards/Bookmark(2).svg'
 
 //styles
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Alert } from 'react-bootstrap'
 
 //API
 import { API } from '../config/api'
@@ -19,6 +19,7 @@ import { UserContext } from '../context/userContext'
 function Bookmark() {
     const [state, dispatch] = useContext(UserContext);
     const [bookmark, setBookmark] = useState([])
+    const [message, setMessage] = useState(null)
 
     const getBookmarks = async() => {
         try {
@@ -46,17 +47,24 @@ function Bookmark() {
             const response = await API.post("/bookmark", body, config)
 
             if (response?.status === 200) {
-                alert(response.data.message)
+                const messageAlert = (
+                    <Alert variant='success' className='py-1 px-1'>
+                        {response.data.message}
+                    </Alert>
+                )
+                setMessage(messageAlert)
             }
 
         } catch (error) {
             console.log(error);
-            console.log(error.response);
-            alert(error.response.data.message)
+            const messageAlert = (
+                <Alert variant='danger' className='py-1 px-1'>
+                    {error.response.data.message}
+                </Alert>
+            )
+            setMessage(messageAlert)
         }
     }
-
-    console.log(bookmark);
 
     useEffect(() => {
         getBookmarks()
@@ -66,6 +74,8 @@ function Bookmark() {
             <NavigationBar />
             <div className='p-5'>
                 <h2 className='Montserrat fs-1 fw-bold pb-5'>Bookmark</h2>
+
+                {message && message}
                 
                 <Row className="row row-cols-4 mt-4">
                     {bookmark.length !== 0 ? (
@@ -77,13 +87,15 @@ function Bookmark() {
                                     onClick={() => handleBookmark(item.journeyID)}
                                     src={BookmarkImg}
                                     alt="BookmarkIcon"
-                                    width={30} 
+                                    width={60} 
                                     style={{
                                         position:"absolute", 
                                         top:10, 
                                         right:40,
+                                        padding:10,
                                         cursor:"pointer"
                                     }}
+                                    className="rounded-circle bg-light"
                                 />
                             </div>
                         ))}

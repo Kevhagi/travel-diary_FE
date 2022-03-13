@@ -77,8 +77,6 @@ function Profile() {
         }
     }
 
-    console.log(user);
-
     const getPosts = async () => {
         try {
             const response = await API.get(`/profile/${state.user.id}/journey`)
@@ -218,12 +216,14 @@ function Profile() {
                                 <img 
                                     src={Trash}
                                     alt="BookmarkIcon"
-                                    width={30} 
+                                    width={60} 
                                     style={{
                                         position:"absolute", 
                                         top:10, 
-                                        right:35
+                                        right:35,
+                                        padding:10
                                     }}
+                                    className="rounded-circle bg-light"
                                 />
                             </div>
                         ))}

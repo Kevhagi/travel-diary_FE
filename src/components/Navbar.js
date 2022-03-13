@@ -103,6 +103,7 @@ function NavigationBar() {
                                 <img src={Icon2} alt="" /> 
                             </Navbar.Brand>
                             <Stack direction='horizontal' className='dropdown'>
+                                <p className='mb-0 Montserrat'>Hello, <span className='fw-bold'>{user.fullName}</span>!</p>
                                 <button class="btn shadow-none pe-0" data-bs-toggle="dropdown" aria-expanded="false">
                                     {user.image === null ?
                                         <Avatar name={user.fullName} className="rounded-circle border border-1 border-primary" size="50"/>
