@@ -39,8 +39,6 @@ function AddJourney() {
         image : '',
         userID : state.user.id
     })
-    
-    console.log(form);
 
     const handleChange = (e) => {
         setForm({

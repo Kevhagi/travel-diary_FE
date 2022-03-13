@@ -34,8 +34,6 @@ function NavigationBar() {
         image : ''
     })
 
-    console.log(user);
-
     const getProfile = async() => {
         try {
             const response = await API.get(`/profile/${state.user.id}`)
@@ -43,7 +41,6 @@ function NavigationBar() {
             
         } catch (error) {
             console.log(error);
-            console.log(error.response);
         }
     }
 
@@ -110,14 +107,14 @@ function NavigationBar() {
                                     {user.image === null ?
                                         <Avatar name={user.fullName} className="rounded-circle border border-1 border-primary" size="50"/>
                                     :
-                                        <img src={user.image} width="50" height="50" className='rounded-circle border border-1 border-primary' alt="profilepic" />
+                                        <img src={user.image} width="50" height="50" className='rounded-circle border border-1 border-primary' />
                                     }
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end">
                                     <li className='d-flex align-items-center' onClick={goProfile}>
                                         <button class="btn shadow-none px-3 pe-2 py-4 d-flex align-items-center">
                                             <div>
-                                            <img src={Profile} width="30" height="30" alt="profile" />
+                                            <img src={Profile} width="30" height="30" />
                                             </div>
                                             <div className='ms-2 OpenSans fw-bold'>
                                             Profile
@@ -127,7 +124,7 @@ function NavigationBar() {
                                     <li className='d-flex align-items-center' onClick={goAddJourney}>
                                         <button class="btn shadow-none px-3 pe-2 py-4 d-flex align-items-center">
                                             <div>
-                                            <img src={NewJourney} width="30" height="30" alt="profile" />
+                                            <img src={NewJourney} width="30" height="30" alt="addJourney" />
                                             </div>
                                             <div className='ms-2 OpenSans fw-bold'>
                                            New Journey
@@ -137,7 +134,7 @@ function NavigationBar() {
                                     <li className='d-flex align-items-center' onClick={goBookmark}>
                                         <button class="btn shadow-none px-3 pe-2 py-4 d-flex align-items-center">
                                             <div>
-                                            <img src={Bookmark} width="30" height="30" alt="profile" />
+                                            <img src={Bookmark} width="30" height="30" alt="bookmark" />
                                             </div>
                                             <div className='ms-2 OpenSans fw-bold'>
                                             Bookmark
