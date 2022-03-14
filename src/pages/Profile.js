@@ -21,6 +21,7 @@ import { UserContext } from '../context/userContext'
 function Profile() {
     const [state, dispatch] = useContext(UserContext);
     const [post, setPost] = useState([])
+    const [message, setMessage] = useState(null)
     const [preview, setPreview] = useState(null)
 
     const [user, setUser] = useState({
@@ -92,6 +93,31 @@ function Profile() {
             document.getElementById("uploadImage").click()
         } catch (error) {
             console.log(error);
+        }
+    }
+
+    const handleRemove = async (journeyID) => {
+        try {
+            const response = await API.delete(`/journey/${journeyID}`)
+
+            if (response?.status === 200) {
+                const messageAlert = (
+                    <Alert variant='success' className='py-1 px-1'>
+                        {response.data.message}
+                    </Alert>
+                )
+                setMessage(messageAlert)
+                document.location.reload(true)
+            }
+            
+        } catch (error) {
+            console.log(error);
+            const messageAlert = (
+                <Alert variant='danger' className='py-1 px-1'>
+                    {error.response.data.message}
+                </Alert>
+            )
+            setMessage(messageAlert)
         }
     }
 
@@ -207,6 +233,8 @@ function Profile() {
                     </div>
                 </div>
 
+                {message && message}
+
                 <Row className="row row-cols-4 mt-4">
                     {post.length !== 0 ? (
                     <>
@@ -214,6 +242,7 @@ function Profile() {
                             <div key={index} style={{position:"relative"}}>
                                 <Cards item={item} />
                                 <img 
+                                    onClick={() => handleRemove(item.id)}
                                     src={Trash}
                                     alt="BookmarkIcon"
                                     width={60} 
@@ -221,7 +250,8 @@ function Profile() {
                                         position:"absolute", 
                                         top:10, 
                                         right:35,
-                                        padding:10
+                                        padding:10,
+                                        cursor:"pointer"
                                     }}
                                     className="rounded-circle bg-light"
                                 />
@@ -231,7 +261,7 @@ function Profile() {
                     ) : (
                     <Col>
                         <div className="text-center pt-5">
-                            <div className="mt-3">No journey data</div>
+                            <div className="mt-3 Montserrat">You haven't posted anything</div>
                         </div>
                     </Col>
                     )}

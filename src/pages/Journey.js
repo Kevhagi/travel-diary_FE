@@ -22,8 +22,6 @@ function Journey() {
         }
     }
 
-    console.log(journey);
-
     let sanitized = DOMPurify.sanitize(journey.desc)
 
     useEffect(() => {

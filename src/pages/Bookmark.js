@@ -103,7 +103,7 @@ function Bookmark() {
                     ) : (
                     <Col>
                         <div className="text-center pt-5">
-                            <div className="mt-3">No bookmark data</div>
+                            <div className="mt-3 Montserrat">You don't have any bookmark</div>
                         </div>
                     </Col>
                     )}

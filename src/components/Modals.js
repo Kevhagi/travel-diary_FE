@@ -57,6 +57,7 @@ export function LoginModal(props) {
                 )
                 setMessage(alert)
                 navigate('/profile')
+                document.location.reload(true)
             }
 
         } catch (error) {
