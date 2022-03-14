@@ -136,43 +136,59 @@ function Home() {
                     {message}
                 </Snackbar>
 
-                <Row className="row row-cols-4 mt-4">
-                    {post.length !== 0 ? (
+                {post.length === 0 ?
                     <>
-                        {post.filter((item, index) => {
-                            if (search === '') {
-                                return item
-                            } else if (
-                                item.title.toLowerCase().includes(search.toLowerCase()) || 
-                                item.desc.toLowerCase().includes(search.toLowerCase()) ||
-                                item.author.fullName.toLowerCase().includes(search.toLowerCase())
-                            ) {
-                                return item
-                            }
-                        }).map((item, index) => (
-                            <div key={index} style={{position:"relative"}}>
-                                <Cards item={item} />
-                                    <img 
-                                        onClick={() => handleBookmark(item.id)}
-                                        src={Bookmarked}
-                                        alt="BookmarkIcon"
-                                        width={60} 
-                                        style={{
-                                            position:"absolute", 
-                                            top:10, 
-                                            right:35,
-                                            padding:10,
-                                            cursor:"pointer"
-                                        }}
-                                        className="rounded-circle bg-light"
-                                    />
+                        {state.isLogin ?
+                            <div className='d-flex justify-content-center align-items-center' style={{height:"500px"}}>
+                                <p className='m-0 p-0 Montserrat fw-bold fs-1 text-muted'>There is nothing here</p>    
                             </div>
-                        ))}
+                        :
+                            <div className='d-flex justify-content-center align-items-center' style={{height:"250px"}}>
+                                <p className='m-0 p-0 Montserrat fw-bold fs-1 text-muted'>There is nothing here</p>    
+                            </div>
+                        }
                     </>
-                    ) : (
-                        <></>
-                    )}
-                </Row>
+                    
+                :
+                    <Row className="row row-cols-4 mt-4">
+                        {post.length !== 0 ? (
+                        <>
+                            {post.filter((item, index) => {
+                                if (search === '') {
+                                    return item
+                                } else if (
+                                    item.title.toLowerCase().includes(search.toLowerCase()) || 
+                                    item.desc.toLowerCase().includes(search.toLowerCase()) ||
+                                    item.author.fullName.toLowerCase().includes(search.toLowerCase())
+                                ) {
+                                    return item
+                                }
+                            }).map((item, index) => (
+                                <div key={index} style={{position:"relative"}}>
+                                    <Cards item={item} />
+                                        <img 
+                                            onClick={() => handleBookmark(item.id)}
+                                            src={Bookmarked}
+                                            alt="BookmarkIcon"
+                                            width={60} 
+                                            style={{
+                                                position:"absolute", 
+                                                top:10, 
+                                                right:35,
+                                                padding:10,
+                                                cursor:"pointer"
+                                            }}
+                                            className="rounded-circle bg-light"
+                                        />
+                                </div>
+                            ))}
+                        </>
+                        ) : (
+                            <></>
+                        )}
+                    </Row>
+                }
+                
             </div>
             <LoginModal 
                 show={showLogin}

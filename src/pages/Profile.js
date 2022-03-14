@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Avatar from 'react-avatar';
 
 //components
@@ -143,6 +144,12 @@ function Profile() {
         }
     }
 
+    let navigate = useNavigate()
+
+    const goAddJourney = () => {
+        navigate("/add-journey")
+    }
+
     useEffect(() => {
         getProfile()
         getPosts()
@@ -259,37 +266,39 @@ function Profile() {
                     {message}
                 </Snackbar>
 
-                <Row className="row row-cols-4 mt-4">
-                    {post.length !== 0 ? (
-                    <>
-                        {post.map((item, index) => (
-                            <div key={index} style={{position:"relative"}}>
-                                <Cards item={item} />
-                                <img 
-                                    onClick={() => handleRemove(item.id)}
-                                    src={Trash}
-                                    alt="BookmarkIcon"
-                                    width={60} 
-                                    style={{
-                                        position:"absolute", 
-                                        top:10, 
-                                        right:35,
-                                        padding:10,
-                                        cursor:"pointer"
-                                    }}
-                                    className="rounded-circle bg-light"
-                                />
-                            </div>
-                        ))}
-                    </>
-                    ) : (
-                    <Col>
-                        <div className="text-center pt-5">
-                            <div className="mt-3 Montserrat">You haven't posted anything</div>
-                        </div>
-                    </Col>
-                    )}
-                </Row>
+                {post.length === 0 ?
+                    <div className='d-flex justify-content-center align-items-center' style={{height:"250px"}}>
+                        <p className='m-0 p-0 Montserrat fw-bold fs-1 text-muted'>You haven't posted anything, post one <span className='text-primary' style={{cursor:"pointer"}} onClick={goAddJourney}>here</span></p>    
+                    </div>
+                :
+                    <Row className="row row-cols-4 mt-4">
+                        {post.length !== 0 ? (
+                        <>
+                            {post.map((item, index) => (
+                                <div key={index} style={{position:"relative"}}>
+                                    <Cards item={item} />
+                                    <img 
+                                        onClick={() => handleRemove(item.id)}
+                                        src={Trash}
+                                        alt="BookmarkIcon"
+                                        width={60} 
+                                        style={{
+                                            position:"absolute", 
+                                            top:10, 
+                                            right:35,
+                                            padding:10,
+                                            cursor:"pointer"
+                                        }}
+                                        className="rounded-circle bg-light"
+                                    />
+                                </div>
+                            ))}
+                        </>
+                        ) : (
+                            <></>
+                        )}
+                    </Row>
+                }
             </div> 
         </div>
     )

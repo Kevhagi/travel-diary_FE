@@ -110,37 +110,39 @@ function Bookmark() {
                     {message}
                 </Snackbar>
                 
-                <Row className="row row-cols-4 mt-4">
-                    {bookmark.length !== 0 ? (
-                    <>
-                        {bookmark.map((item, index) => (
-                            <div key={index} style={{position:"relative"}}>
-                                <Cards item={item} />
-                                <img 
-                                    onClick={() => handleBookmark(item.journeyID)}
-                                    src={Bookmarked}
-                                    alt="BookmarkIcon"
-                                    width={60} 
-                                    style={{
-                                        position:"absolute", 
-                                        top:10, 
-                                        right:40,
-                                        padding:10,
-                                        cursor:"pointer"
-                                    }}
-                                    className="rounded-circle bg-light"
-                                />
-                            </div>
-                        ))}
-                    </>
-                    ) : (
-                    <Col>
-                        <div className="text-center pt-5">
-                            <div className="mt-3 Montserrat">You don't have any bookmark</div>
-                        </div>
-                    </Col>
-                    )}
-                </Row>
+                {bookmark.length === 0 ?
+                    <div className='d-flex justify-content-center align-items-center' style={{height:"500px"}}>
+                        <p className='m-0 p-0 Montserrat fw-bold fs-1 text-muted'>You don't have any bookmark</p>    
+                    </div>
+                :
+                    <Row className="row row-cols-4 mt-4">
+                        {bookmark.length !== 0 ? (
+                        <>
+                            {bookmark.map((item, index) => (
+                                <div key={index} style={{position:"relative"}}>
+                                    <Cards item={item} />
+                                    <img 
+                                        onClick={() => handleBookmark(item.journeyID)}
+                                        src={Bookmarked}
+                                        alt="BookmarkIcon"
+                                        width={60} 
+                                        style={{
+                                            position:"absolute", 
+                                            top:10, 
+                                            right:40,
+                                            padding:10,
+                                            cursor:"pointer"
+                                        }}
+                                        className="rounded-circle bg-light"
+                                    />
+                                </div>
+                            ))}
+                        </>
+                        ) : (
+                            <></>
+                        )}
+                    </Row>
+                }
             </div>
         </div>
     )

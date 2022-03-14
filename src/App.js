@@ -17,6 +17,9 @@ import { UserContext } from "./context/userContext"
 //API
 import { API, setAuthToken } from "./config/api";
 
+//Private Route
+import PrivateRoute from './PrivateRoute'
+
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
@@ -55,10 +58,12 @@ function App() {
     <Router>
       <Routes>
         <Route exact path="/" element={<Home />} />
-        <Route exact path="/profile/" element={<Profile />} />
-        <Route exact path="/bookmark/" element={<Bookmark />} />
-        <Route exact path="/add-journey/" element={<AddJourney />} />
         <Route exact path="/journey/:id" element={<Journey />} />
+        <Route exact path="/" element={<PrivateRoute />}> 
+          <Route exact path="/profile/" element={<Profile />} />
+          <Route exact path="/bookmark/" element={<Bookmark />} />
+          <Route exact path="/add-journey/" element={<AddJourney />} />
+        </Route>
       </Routes>
     </Router>
   );
