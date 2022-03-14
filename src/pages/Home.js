@@ -6,11 +6,12 @@ import Cards from '../components/Cards'
 import { LoginModal } from '../components/Modals'
 
 //images
-import Bookmark from '../images/Cards/Bookmark(2).svg'
 import Bookmarked from '../images/Cards/Bookmarked.svg'
 
 //styles
-import { Row, Alert } from 'react-bootstrap'
+import { Row } from 'react-bootstrap'
+import Snackbar from '@mui/material/Snackbar'
+import MuiAlert from '@mui/material/Alert'
 
 //API
 import { API } from '../config/api'
@@ -23,6 +24,24 @@ function Home() {
     const [search, setSearch] = useState('')
     const [message, setMessage] = useState(null)
     const [state, dispatch] = useContext(UserContext);
+
+    //snackbar materialUI
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    }
+    
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    }
 
     //Modal Login
     const [showLogin, setShowLogin] = useState(false);
@@ -60,12 +79,22 @@ function Home() {
                 const response = await API.post("/bookmark", body, config)
 
                 if (response?.status === 200) {
-                    const messageAlert = (
-                        <Alert variant='success' className='py-1 px-1'>
-                            {response.data.message}
-                        </Alert>
-                    )
-                    setMessage(messageAlert)
+                    if (response.data.message === `"${response.data.title}" added to your bookmark.`){
+                        const messageAlert = (
+                            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                                {response.data.message}
+                            </Alert>
+                        )
+                        setMessage(messageAlert)
+                    } else if (response.data.message === `"${response.data.title}" deleted from your bookmark.`){
+                        const messageAlert = (
+                            <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                                {response.data.message}
+                            </Alert>
+                        )
+                        setMessage(messageAlert)
+                    }
+                    handleClick()
                 }    
             } else if (!state.isLogin) {
                 handleLogin()
@@ -73,11 +102,12 @@ function Home() {
         } catch (error) {
             console.log(error);
             const messageAlert = (
-                <Alert variant='danger' className='py-1 px-1'>
+                <Alert onClose={handleClose} severity="warning" sx={{ width: '100%' }}>
                     {error.response.data.message}
                 </Alert>
-            )
+            ) 
             setMessage(messageAlert)
+            handleClick()
         }
     }
 
@@ -102,7 +132,9 @@ function Home() {
                     />
                 </div>
 
-                {message && message}
+                <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+                    {message}
+                </Snackbar>
 
                 <Row className="row row-cols-4 mt-4">
                     {post.length !== 0 ? (
@@ -122,7 +154,7 @@ function Home() {
                                 <Cards item={item} />
                                     <img 
                                         onClick={() => handleBookmark(item.id)}
-                                        src={Bookmark}
+                                        src={Bookmarked}
                                         alt="BookmarkIcon"
                                         width={60} 
                                         style={{

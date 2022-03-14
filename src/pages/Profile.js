@@ -10,7 +10,9 @@ import Trash from '../images/Profile/trash.svg'
 import Upload from '../images/Profile/upload.svg'
 
 //styles
-import { Row, Col, Alert, Button } from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
+import Snackbar from '@mui/material/Snackbar'
+import MuiAlert from '@mui/material/Alert'
 
 //API
 import { API } from '../config/api'
@@ -23,6 +25,24 @@ function Profile() {
     const [post, setPost] = useState([])
     const [message, setMessage] = useState(null)
     const [preview, setPreview] = useState(null)
+
+    //snackbar materialUI
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    }
+    
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    }
 
     const [user, setUser] = useState({
         fullName : '',
@@ -102,22 +122,24 @@ function Profile() {
 
             if (response?.status === 200) {
                 const messageAlert = (
-                    <Alert variant='success' className='py-1 px-1'>
+                    <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                         {response.data.message}
                     </Alert>
                 )
                 setMessage(messageAlert)
+                handleClick()
                 document.location.reload(true)
             }
             
         } catch (error) {
             console.log(error);
             const messageAlert = (
-                <Alert variant='danger' className='py-1 px-1'>
+                <Alert onClose={handleClose} severity="warning" sx={{ width: '100%' }}>
                     {error.response.data.message}
                 </Alert>
-            )
+            ) 
             setMessage(messageAlert)
+            handleClick()
         }
     }
 
@@ -233,7 +255,9 @@ function Profile() {
                     </div>
                 </div>
 
-                {message && message}
+                <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+                    {message}
+                </Snackbar>
 
                 <Row className="row row-cols-4 mt-4">
                     {post.length !== 0 ? (

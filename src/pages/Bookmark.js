@@ -5,10 +5,12 @@ import NavigationBar from '../components/Navbar'
 import Cards from '../components/Cards'
 
 //images
-import BookmarkImg from '../images/Cards/Bookmark(2).svg'
+import Bookmarked from '../images/Cards/Bookmarked.svg'
 
 //styles
-import { Row, Col, Alert } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
+import Snackbar from '@mui/material/Snackbar'
+import MuiAlert from '@mui/material/Alert'
 
 //API
 import { API } from '../config/api'
@@ -20,6 +22,24 @@ function Bookmark() {
     const [state, dispatch] = useContext(UserContext);
     const [bookmark, setBookmark] = useState([])
     const [message, setMessage] = useState(null)
+
+    //snackbar materialUI
+    const Alert = React.forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    }
+    
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    }
 
     const getBookmarks = async() => {
         try {
@@ -47,22 +67,33 @@ function Bookmark() {
             const response = await API.post("/bookmark", body, config)
 
             if (response?.status === 200) {
-                const messageAlert = (
-                    <Alert variant='success' className='py-1 px-1'>
-                        {response.data.message}
-                    </Alert>
-                )
-                setMessage(messageAlert)
+                if (response.data.message === `"${response.data.title}" added to your bookmark.`){
+                    const messageAlert = (
+                        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                            {response.data.message}
+                        </Alert>
+                    )
+                    setMessage(messageAlert)
+                } else if (response.data.message === `"${response.data.title}" deleted from your bookmark.`){
+                    const messageAlert = (
+                        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                            {response.data.message}
+                        </Alert>
+                    )
+                    setMessage(messageAlert)
+                }
+                handleClick()
             }
 
         } catch (error) {
             console.log(error);
             const messageAlert = (
-                <Alert variant='danger' className='py-1 px-1'>
+                <Alert onClose={handleClose} severity="warning" sx={{ width: '100%' }}>
                     {error.response.data.message}
                 </Alert>
-            )
+            ) 
             setMessage(messageAlert)
+            handleClick()
         }
     }
 
@@ -75,7 +106,9 @@ function Bookmark() {
             <div className='p-5'>
                 <h2 className='Montserrat fs-1 fw-bold pb-5'>Bookmark</h2>
 
-                {message && message}
+                <Snackbar open={open} autoHideDuration={5000} onClose={handleClose}>
+                    {message}
+                </Snackbar>
                 
                 <Row className="row row-cols-4 mt-4">
                     {bookmark.length !== 0 ? (
@@ -85,7 +118,7 @@ function Bookmark() {
                                 <Cards item={item} />
                                 <img 
                                     onClick={() => handleBookmark(item.journeyID)}
-                                    src={BookmarkImg}
+                                    src={Bookmarked}
                                     alt="BookmarkIcon"
                                     width={60} 
                                     style={{
