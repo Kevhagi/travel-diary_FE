@@ -4,12 +4,6 @@ import { useNavigate } from "react-router-dom";
 //Components
 import NavigationBar from '../components/Navbar'
 
-/* Froala
-import 'froala-editor/css/froala_style.min.css';
-import 'froala-editor/css/froala_editor.pkgd.min.css';
-import 'froala-editor/js/plugins.pkgd.min.js';
-import FroalaEditorComponent from 'react-froala-wysiwyg'; */
-
 //CKeditor
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
@@ -59,13 +53,6 @@ function AddJourney() {
             desc : data
         })
     }
-    
-    /* const handleChangeFroala = (e) => {
-        setForm({
-            ...form,
-            desc : e
-        })
-    } */
 
     const selectUploadImage = async () => {
         try {
@@ -178,13 +165,6 @@ function AddJourney() {
                             width: "100%"
                         }}
                     />
-
-                    {/* 
-                    <FroalaEditorComponent 
-                        tag="textarea" 
-                        onModelChange={handleChangeFroala}
-                    />
-                    */}
 
                     <CKEditor 
                         editor={ClassicEditor}

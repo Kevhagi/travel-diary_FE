@@ -39,10 +39,10 @@ function Journey() {
                             <p className="fw-bold" style={{fontSize:48}}>{journey.title}</p>    
                         </div>
                         <div>
-                            <p className="fw-normal fs-2 my-3">{journey.author.fullName}</p>    
+                            <p className="fw-normal fs-5 my-3">{journey.author.fullName}</p>    
                         </div>
                     </div>
-                    <p className="fs-4 text-primary">{dateFormat(journey.updatedAt, "dd mmmm yyyy")}</p>
+                    <p className="text-primary">{dateFormat(journey.updatedAt, "dd mmmm yyyy")}</p>
                     <div className="my-5 d-flex justify-content-center">
                         <img 
                             src={journey.image} 
