@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 //styles
 import { Modal, InputGroup, FormControl, Button, Alert } from 'react-bootstrap'
@@ -14,8 +13,6 @@ import { UserContext } from '../context/userContext'
 export function LoginModal(props) {
     const [state, dispatch] = useContext(UserContext);
     const [message, setMessage] = useState(null)
-
-    let navigate = useNavigate()
 
     const [form, setForm] = useState({
         email : '',
@@ -56,7 +53,6 @@ export function LoginModal(props) {
                     </Alert>
                 )
                 setMessage(alert)
-                navigate('/profile')
                 document.location.reload(true)
             }
 

@@ -68,7 +68,6 @@ function NavigationBar() {
           type: "LOGOUT"
         });
         navigate("/")
-        document.location.reload(true)
     }
 
     //Modal Login
