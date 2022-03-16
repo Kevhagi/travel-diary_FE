@@ -9,6 +9,7 @@ import Cards from '../components/Cards'
 //images
 import Trash from '../images/Profile/trash.svg'
 import Upload from '../images/Profile/upload.svg'
+import Edit from '../images/Profile/edit.svg'
 
 //styles
 import { Row, Col, Button } from 'react-bootstrap'
@@ -285,6 +286,20 @@ function Profile() {
                                         style={{
                                             position:"absolute", 
                                             top:10, 
+                                            right:35,
+                                            padding:10,
+                                            cursor:"pointer"
+                                        }}
+                                        className="rounded-circle bg-light"
+                                    />
+                                    <img 
+                                        onClick={() => {navigate(`/edit-journey/${item.id}`)}}
+                                        src={Edit}
+                                        alt="EditIcon"
+                                        width={60} 
+                                        style={{
+                                            position:"absolute", 
+                                            top:80, 
                                             right:35,
                                             padding:10,
                                             cursor:"pointer"

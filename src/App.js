@@ -7,6 +7,7 @@ import Profile from './pages/Profile'
 import Bookmark from './pages/Bookmark'
 import Journey from './pages/Journey'
 import AddJourney from './pages/AddJourney'
+import EditJourney from './pages/EditJourney'
 
 //Global style
 import './App.css'
@@ -63,6 +64,7 @@ function App() {
           <Route exact path="/profile/" element={<Profile />} />
           <Route exact path="/bookmark/" element={<Bookmark />} />
           <Route exact path="/add-journey/" element={<AddJourney />} />
+          <Route exact path="/edit-journey/:id" element={<EditJourney />} />
         </Route>
       </Routes>
     </Router>
