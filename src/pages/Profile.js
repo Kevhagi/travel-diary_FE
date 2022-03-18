@@ -254,7 +254,6 @@ function Profile() {
                                 className='px-4' 
                                 variant="outline-primary fw-bold"
                                 type="submit"
-                                disabled
                             >Update Image</Button>
                             {loading && (
                                 <>
