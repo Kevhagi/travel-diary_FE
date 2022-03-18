@@ -250,31 +250,36 @@ function Profile() {
                     <div className='d-flex justify-content-center mt-4'>
                         {preview !== null ?
                         <Box sx={{ m: 1, position: 'relative' }}>
-                            <Button 
-                                className='px-4' 
-                                variant="outline-primary fw-bold"
-                                type="submit"
-                            >Update Image</Button>
-                            {loading && (
-                                <>
+                            {loading ? 
                                 <Button 
                                     className='px-4' 
                                     variant="outline-primary fw-bold"
                                     type="submit"
-                                    disabled
                                 >Update Image</Button>
-                                <CircularProgress
-                                    size={24}
-                                    sx={{
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    marginTop: '-12px',
-                                    marginLeft: '-12px',
-                                  }}
-                                />
+                            :
+                            <>
+                                {loading && (
+                                <>
+                                    <Button 
+                                        className='px-4' 
+                                        variant="outline-primary fw-bold"
+                                        type="submit"
+                                        disabled
+                                    >Update Image</Button>
+                                    <CircularProgress
+                                        size={24}
+                                        sx={{
+                                        position: 'absolute',
+                                        top: '50%',
+                                        left: '50%',
+                                        marginTop: '-12px',
+                                        marginLeft: '-12px',
+                                    }}
+                                    />
                                 </>
-                            )}
+                                )}
+                            </>
+                            }
                         </Box>
                             
                         :
