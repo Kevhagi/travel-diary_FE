@@ -91,7 +91,7 @@ function Profile() {
                 
                 const response = API.patch(`/profile/${user.id}`, formData, config)
 
-                console.log(response?.status);
+                console.log(response);
             }
         } catch (error) {
             console.log(error);
