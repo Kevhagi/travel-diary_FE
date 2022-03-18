@@ -250,7 +250,7 @@ function Profile() {
                     <div className='d-flex justify-content-center mt-4'>
                         {preview !== null ?
                         <Box sx={{ m: 1, position: 'relative' }}>
-                            {loading ? 
+                            {loading === false ? 
                                 <Button 
                                     className='px-4' 
                                     variant="outline-primary fw-bold"
