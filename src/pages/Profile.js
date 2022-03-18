@@ -91,7 +91,9 @@ function Profile() {
                 
                 const response = API.patch(`/profile/${user.id}`, formData, config)
 
-                console.log(response);
+                if(response?.status === 200){
+                    navigate('/')
+                }
             }
         } catch (error) {
             console.log(error);
