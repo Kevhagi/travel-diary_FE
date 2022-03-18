@@ -113,8 +113,7 @@ function AddJourney() {
             const response = await API.post('/journey', formData, config)
 
             if(response?.status === 200){
-                alert("data masuk")
-                //navigate('/profile')
+                navigate('/profile')
             }
 
         } catch (error) {
