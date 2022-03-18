@@ -349,7 +349,9 @@ function Profile() {
                     }
                 </div> 
             :
-                <></>
+                <>
+                    {navigate('/')}
+                </>
             }
         </div>
     )
