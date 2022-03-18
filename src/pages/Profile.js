@@ -92,9 +92,9 @@ function Profile() {
                 formData.set("image", user.image[0], user.image[0].name)
                 
                 await API.patch(`/profile/${user.id}`, formData, config)
-
-                document.location.reload(true)
             }
+
+            document.location.reload(true)
         } catch (error) {
             console.log(error);
         }
