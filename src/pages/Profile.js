@@ -90,10 +90,8 @@ function Profile() {
                 formData.set("image", user.image[0], user.image[0].name)
                 
                 const response = await API.patch(`/profile/${user.id}`, formData, config)
-                
-                if (response?.status === 200){
-                    navigate('/')
-                }
+
+                document.location.reload(true)
             }
         } catch (error) {
             console.log(error);
