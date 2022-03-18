@@ -90,10 +90,14 @@ function Profile() {
                 formData.set("image", user.image[0], user.image[0].name)
                 
                 const response = await API.patch(`/profile/${user.id}`, formData, config)
-                
-                if (response?.status === 503){
-                    navigate('/')
+
+                const sleep = (milliseconds) => {
+                    return new Promise(resolve => setTimeout(resolve, milliseconds))
                 }
+                
+                await sleep(10000)
+
+                navigate('/')
             }
         } catch (error) {
             console.log(error);
