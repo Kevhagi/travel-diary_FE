@@ -160,7 +160,7 @@ function AddJourney() {
                 <h2 className='Montserrat fs-1 fw-bold mb-5'>Edit Journey</h2>
 
                 <form onSubmit={handleSubmit} id="inputJourney">
-                <div className="px-5">
+                <div className="px-sm-2 px-md-5">
                     <div className="mb-3 d-flex justify-content-center">
                         <div 
                         className="d-flex justify-content-center align-items-center border border-5 rounded" 

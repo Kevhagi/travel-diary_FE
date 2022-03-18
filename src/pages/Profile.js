@@ -173,7 +173,7 @@ function Profile() {
                             <div style={{position:"relative"}}>
                                 <Avatar 
                                     name={user.fullName} 
-                                    className="rounded-circle border border-1 border-primary" 
+                                    className="rounded-circle" 
                                     size="200"
                                 />
                                 <img 
@@ -200,7 +200,7 @@ function Profile() {
                                         src={preview} 
                                         width="200" 
                                         height="200" 
-                                        className='rounded-circle border border-1 border-primary' 
+                                        className='rounded-circle' 
                                         alt="profilepic" 
                                     />
                                     <img 
@@ -224,7 +224,7 @@ function Profile() {
                                         src={user.image} 
                                         width="200" 
                                         height="200" 
-                                        className='rounded-circle border border-1 border-primary' 
+                                        className='rounded-circle' 
                                         alt="profilepic" 
                                     />
                                     <img 
@@ -304,7 +304,7 @@ function Profile() {
                         <p className='m-0 p-0 Montserrat fw-bold fs-1 text-muted'>You haven't posted anything, post one <span className='text-primary' style={{cursor:"pointer"}} onClick={goAddJourney}>here</span></p>    
                     </div>
                 :
-                    <Row className="row row-cols-4 mt-4">
+                    <Row className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-4 mt-4">
                         {post.length !== 0 ? (
                         <>
                             {post.map((item, index) => (

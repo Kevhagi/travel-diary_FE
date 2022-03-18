@@ -121,7 +121,7 @@ function Home() {
             <div className='p-5'>
                 <h2 className='Montserrat fs-1 fw-bold'>Journey</h2>
 
-                <div className='OpenSans input-group px-5 py-3'>
+                <div className='OpenSans input-group px-sm-2 px-md-5 py-3' id='searchbar'>
                     <input 
                         type="text" 
                         class="form-control" 
@@ -150,7 +150,7 @@ function Home() {
                     </>
                     
                 :
-                    <Row className="row row-cols-4 mt-4">
+                    <Row className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-4 mt-4">
                         {post.length !== 0 ? (
                         <>
                             {post.filter((item, index) => {

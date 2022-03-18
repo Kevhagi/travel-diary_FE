@@ -9,6 +9,9 @@ import dateFormat, { masks } from "dateformat";
 
 import DOMPurify from 'dompurify';
 
+//style
+import '../css/Journey.css'
+
 function Journey() {
     let { id } = useParams()
     const [journey, setJourney] = useState('')
@@ -33,10 +36,10 @@ function Journey() {
             <NavigationBar />
             <div className='p-5'>
                 {journey !== '' ?
-                <div className="px-5">
+                <div className="px-sm-2 px-md-5">
                     <div className="section1">
                         <div>
-                            <p className="fw-bold" style={{fontSize:48}}>{journey.title}</p>    
+                            <p className="fw-bold" style={{fontSize:48}} id="title">{journey.title}</p>    
                         </div>
                         <div>
                             <p className="fw-normal fs-5 my-3">{journey.author.fullName}</p>    

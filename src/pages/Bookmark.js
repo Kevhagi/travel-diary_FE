@@ -115,7 +115,7 @@ function Bookmark() {
                         <p className='m-0 p-0 Montserrat fw-bold fs-1 text-muted'>You don't have any bookmark</p>    
                     </div>
                 :
-                    <Row className="row row-cols-4 mt-4">
+                    <Row className="row row-cols-sm-1 row-cols-md-2 row-cols-lg-4 mt-4">
                         {bookmark.length !== 0 ? (
                         <>
                             {bookmark.map((item, index) => (
