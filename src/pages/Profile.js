@@ -92,7 +92,7 @@ function Profile() {
                 const response = await API.patch(`/profile/${user.id}`, formData, config)
                 
                 if (response?.status === 200){
-                    document.location.reload(true)
+                    navigate('/')
                 }
             }
         } catch (error) {
