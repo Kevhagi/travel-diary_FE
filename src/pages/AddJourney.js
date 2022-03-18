@@ -10,6 +10,8 @@ import { CKEditor } from '@ckeditor/ckeditor5-react'
 
 //Styles
 import { Button, Alert } from 'react-bootstrap'
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 //Images
 import Plus from '../images/AddJourney/plus.svg'
@@ -25,7 +27,8 @@ function AddJourney() {
 
     const [preview, setPreview] = useState(null)
     const [message, setMessage] = useState(null)
-    const [state, reducer] = useContext(UserContext)
+    const [state] = useContext(UserContext)
+    const [loading, setLoading] = useState(false)
 
     const [form, setForm] = useState({
         title : '',
@@ -65,6 +68,8 @@ function AddJourney() {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
+
+            setLoading(true)
 
             // Check form
             if (form.image === '') {
@@ -108,7 +113,6 @@ function AddJourney() {
             const response = await API.post('/journey', formData, config)
 
             if(response?.status === 200){
-                //Bisa ditambahin modal, add more journey/go profile
                 navigate('/profile')
             }
 
@@ -172,7 +176,30 @@ function AddJourney() {
                     />
 
                     <div className="d-flex justify-content-end">
-                        <Button type="submit" className='px-4 mt-4' variant="primary fw-bold">Add Journey</Button>    
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            {loading === false ?
+                                <Button type="submit" className='px-4 mt-4' variant="primary fw-bold">Add Journey</Button>
+                            :
+                                <>
+                                    {loading && (
+                                        <>
+                                        <Button type="submit" className='px-4 mt-4' variant="primary fw-bold" disabled>Add Journey</Button>
+                                        <CircularProgress
+                                            size={24}
+                                            sx={{
+                                            position: 'absolute',
+                                            top: '50%',
+                                            left: '50%',
+                                            marginTop: '-12px',
+                                            marginLeft: '-12px',
+                                            }}
+                                        />
+                                        </>
+                                    )}
+                                </>
+                            }
+                        </Box>
+                            
                     </div>
                     
                 </div>
