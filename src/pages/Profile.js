@@ -254,8 +254,16 @@ function Profile() {
                                 className='px-4' 
                                 variant="outline-primary fw-bold"
                                 type="submit"
+                                disabled
                             >Update Image</Button>
                             {loading && (
+                                <>
+                                <Button 
+                                    className='px-4' 
+                                    variant="outline-primary fw-bold"
+                                    type="submit"
+                                    disabled
+                                >Update Image</Button>
                                 <CircularProgress
                                     size={24}
                                     sx={{
@@ -266,6 +274,7 @@ function Profile() {
                                     marginLeft: '-12px',
                                   }}
                                 />
+                                </>
                             )}
                         </Box>
                             
