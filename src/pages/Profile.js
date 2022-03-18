@@ -99,7 +99,9 @@ function Profile() {
                 await API.patch(`/profile/${user.id}`, formData, config)
             }
 
-            document.location.reload(true)
+            if(response?.status === 200){
+                document.location.reload(true)
+            }
         } catch (error) {
             console.log(error);
         }

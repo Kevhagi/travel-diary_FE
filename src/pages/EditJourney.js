@@ -10,6 +10,8 @@ import { CKEditor } from '@ckeditor/ckeditor5-react'
 
 //Styles
 import { Button, Alert } from 'react-bootstrap'
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 //Images
 import Plus from '../images/AddJourney/plus.svg'
@@ -31,6 +33,7 @@ function AddJourney() {
         desc : ''
     })
     const [state, reducer] = useContext(UserContext)
+    const [loading, setLoading] = useState(false)
 
     const {id} = useParams()
 
@@ -72,6 +75,8 @@ function AddJourney() {
     const handleSubmit = async (e) => {
         try {
             e.preventDefault();
+
+            setLoading(true)
 
             // Check form
             if (form.image === '') {
@@ -198,7 +203,28 @@ function AddJourney() {
                     />
 
                     <div className="d-flex justify-content-end">
-                        <Button type="submit" className='px-4 mt-4' variant="primary fw-bold">Edit Journey</Button>    
+                        <Box sx={{ m: 1, position: 'relative' }}>
+                            {loading === false ?
+                                <Button type="submit" className='px-4 mt-4' variant="primary fw-bold">Edit Journey</Button>
+                            :
+                                <>
+                                    {loading && (
+                                        <>
+                                        <Button type="submit" className='px-4 mt-4' variant="primary fw-bold" disabled>Edit Journey</Button>
+                                        <CircularProgress
+                                            size={24}
+                                            sx={{
+                                            position: 'absolute',
+                                            top: '50%',
+                                            left: '50%',
+                                            marginLeft: '-12px',
+                                            }}
+                                        />
+                                        </>
+                                    )}
+                                </>
+                            }
+                        </Box>
                     </div>
                     
                 </div>

@@ -198,7 +198,6 @@ function AddJourney() {
                                 </>
                             }
                         </Box>
-                            
                     </div>
                     
                 </div>
