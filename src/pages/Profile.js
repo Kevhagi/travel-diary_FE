@@ -12,9 +12,11 @@ import Upload from '../images/Profile/upload.svg'
 import Edit from '../images/Profile/edit.svg'
 
 //styles
-import { Row, Col, Button } from 'react-bootstrap'
+import { Row, Button } from 'react-bootstrap'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert from '@mui/material/Alert'
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 //API
 import { API } from '../config/api'
@@ -27,6 +29,7 @@ function Profile() {
     const [post, setPost] = useState([])
     const [message, setMessage] = useState(null)
     const [preview, setPreview] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     let navigate = useNavigate()
 
@@ -86,6 +89,8 @@ function Profile() {
                 "Content-type": "multipart/form-data"
                 }
             }
+
+            setLoading(true)
 
             if (user.image !== null){
                 const formData = new FormData()
@@ -244,11 +249,19 @@ function Profile() {
                     </div>
                     <div className='d-flex justify-content-center mt-4'>
                         {preview !== null ?
+                        <Box sx={{ m: 1, position: 'relative' }}>
                             <Button 
                                 className='px-4' 
                                 variant="outline-primary fw-bold"
                                 type="submit"
                             >Update Image</Button>
+                            {loading && (
+                                <CircularProgress
+                                    size={24}
+                                />
+                            )}
+                        </Box>
+                            
                         :
                             <></>
                         }    
