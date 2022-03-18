@@ -90,6 +90,8 @@ function Profile() {
                 formData.set("image", user.image[0], user.image[0].name)
                 
                 const response = API.patch(`/profile/${user.id}`, formData, config)
+
+                console.log(response?.status);
             }
         } catch (error) {
             console.log(error);
