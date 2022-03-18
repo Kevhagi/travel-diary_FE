@@ -28,6 +28,8 @@ function Profile() {
     const [message, setMessage] = useState(null)
     const [preview, setPreview] = useState(null)
 
+    let navigate = useNavigate()
+
     //snackbar materialUI
     const Alert = React.forwardRef(function Alert(props, ref) {
         return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -144,8 +146,6 @@ function Profile() {
             handleClick()
         }
     }
-
-    let navigate = useNavigate()
 
     const goAddJourney = () => {
         navigate("/add-journey")
