@@ -2,7 +2,7 @@
     background:
         linear-gradient(rgba(0, 0, 0, 0.4), 
         rgba(0, 0, 0, 0.4)), 
-        url("../images/Navbar/Phuket1.png") no-repeat;
+        url("../images/Navbar/Phuket1.svg") no-repeat;
     background-size: cover;
     width: 100%;
     padding: 10px 100px 50px 100px
@@ -20,4 +20,22 @@
 
 .dropdown-menu{
     width: 180px;
+}
+
+@media (max-width: 768px) {
+    .jumbotron{
+        padding: 10px 20px
+    }
+    .jumbotron .hstack{
+        gap: .5rem!important
+    }
+    .jumbotron .hstack button{
+        padding: 6px 12px!important
+    }
+    .content{
+        width: 88%
+    }
+    #userGreeting{
+        text-align: end
+    }
 }
