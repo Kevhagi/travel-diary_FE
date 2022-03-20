@@ -83,10 +83,10 @@ export function LoginModal(props) {
                 <div className='px-5'>
                     <center className='py-4 fs-2 fw-bold'>Login</center>
                     <div className='d-flex flex-column'>
-                        <div className='px-4'>
+                        <div className='px-sm-0 px-md-4 px-lg-4'>
                             {message && message}    
                         </div>
-                        <form className='px-4' onSubmit={handleSubmit}>
+                        <form className='px-sm-0 px-md-4 px-lg-4' onSubmit={handleSubmit}>
                             <div className='mb-4'>
                                 <label htmlFor="Email" className='ps-2 fs-4 fw-bold'>Email</label>
                                 <InputGroup>
@@ -180,7 +180,7 @@ export function RegisterModal(props) {
             let errorMessage = error.response.data.error.message
             errorMessage = errorMessage.replace('"email"', 'Email')
             errorMessage = errorMessage.replace('"password"', 'Password')
-            errorMessage = errorMessage.replace('"fullName"', 'Fullname')
+            errorMessage = errorMessage.replace('"fullName"', 'Full name')
             errorMessage = errorMessage.replace('"phone"', 'Phone number')
 
             const alert = (
@@ -203,10 +203,10 @@ export function RegisterModal(props) {
                 <div className='px-5'>
                     <center className='py-4 fs-2 fw-bold'>Register</center>
                     <div className='d-flex flex-column'>
-                         <div className='px-4'>
+                         <div className='px-sm-0 px-md-4 px-lg-4'>
                             {message && message}    
                         </div>
-                        <form className='px-4' onSubmit={handleSubmit}>
+                        <form className='px-sm-0 px-md-4 px-lg-4' onSubmit={handleSubmit}>
                             <div className='mb-4'>
                                 <label htmlFor="fullName" className='ps-2 fs-4 fw-bold'>Full Name</label>
                                 <InputGroup>

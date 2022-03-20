@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from 'react'
 //components
 import NavigationBar from '../components/Navbar'
 import Cards from '../components/Cards'
-import { LoginModal } from '../components/Modals'
+import { LoginModal, RegisterModal } from '../components/Modals'
 
 //images
 import Bookmarked from '../images/Cards/Bookmarked.svg'
@@ -50,6 +50,10 @@ function Home() {
     function handleSwitchLogin(){
         setShowLogin(false)
         setShowRegister(true)
+    }
+    function handleSwitchRegister(){
+        setShowLogin(true)
+        setShowRegister(false)
     }
 
     const allPost = async () => {
@@ -194,6 +198,11 @@ function Home() {
                 show={showLogin}
                 onHide={() => setShowLogin(false)}
                 switchToRegister={handleSwitchLogin}
+            />
+            <RegisterModal 
+                show={showRegister}
+                onHide={() => setShowRegister(false)}
+                switchToLogin={handleSwitchRegister}
             />
         </div>
     )
