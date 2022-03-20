@@ -16,6 +16,8 @@ function Journey() {
     let { id } = useParams()
     const [journey, setJourney] = useState('')
 
+    document.title = `${journey.title} | The Journey`
+
     const getJourney = async() => {
         try {
             const response = await API.get(`/journey/${id}`)

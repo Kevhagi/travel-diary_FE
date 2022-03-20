@@ -19,6 +19,8 @@ import { API } from '../config/api'
 import { UserContext } from '../context/userContext'
 
 function Bookmark() {
+    document.title = `Bookmark | The Journey`
+
     const [state, dispatch] = useContext(UserContext);
     const [bookmark, setBookmark] = useState([])
     const [message, setMessage] = useState(null)

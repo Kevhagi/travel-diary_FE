@@ -58,6 +58,8 @@ function Profile() {
         image : ''
     })
 
+    document.title = `${user.fullName} | The Journey`
+
     const getProfile = async() => {
         try {
             const response = await API.get(`/profile/${state.user.id}`)

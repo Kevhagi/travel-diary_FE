@@ -23,6 +23,8 @@ import { API } from '../config/api'
 import { UserContext } from "../context/userContext";
 
 function AddJourney() {
+    document.title = `New Journey | The Journey`
+
     const navigate = useNavigate()
 
     const [preview, setPreview] = useState(null)

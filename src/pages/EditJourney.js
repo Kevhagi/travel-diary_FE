@@ -32,6 +32,9 @@ function AddJourney() {
         title : '',
         desc : ''
     })
+
+    document.title = `Edit '${details.title}' | The Journey`
+
     const [state, reducer] = useContext(UserContext)
     const [loading, setLoading] = useState(false)
 

@@ -20,6 +20,8 @@ import { API } from '../config/api'
 import { UserContext } from '../context/userContext'
 
 function Home() {
+    document.title = "The Journey"
+
     const [post, setPost] = useState([])
     const [search, setSearch] = useState('')
     const [message, setMessage] = useState(null)
